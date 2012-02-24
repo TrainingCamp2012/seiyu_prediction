@@ -37,8 +37,7 @@ end
 class Array
   # 声優個人板のスレタイに含まれているもののみ出力する
   def filtering_2ch
-    # 2ch_url = "http://ikura.2ch.net/voiceactor/subback.html"
-    url = "../data/dump/subback.html"
+    url = "http://ikura.2ch.net/voiceactor/subback.html"
     d = Nokogiri::HTML(open(url).read)
 
     threads = Array.new
