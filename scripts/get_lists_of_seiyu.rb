@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # crawl SEIYU lists from wikipedia
 require "nokogiri"
-require "open-uri"
+require "open-uri/cached"
 require "kconv"
 
 class Crawler
