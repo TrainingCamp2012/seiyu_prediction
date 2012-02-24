@@ -26,34 +26,25 @@ class Crawler
   end
   
   def next_url(doc)
-    url = nil
-    (doc/"div#mw-pages"/"a").each do |e|
-      url = e[:href] if e.inner_text.include?("次の200件")
-    end
-    url
+    d = doc.xpath('//div[@id="mw-pages"]/a[.="次の200件"]')
+    d.length > 1 ? d.first[:href] : nil
   end
 end
 
 class Array
   # 声優個人板のスレタイに含まれているもののみ出力する
   def filtering_2ch
-    url = "http://ikura.2ch.net/voiceactor/subback.html"
-    d = Nokogiri::HTML(open(url).read)
+    url = "http://ikura.2ch.net/voiceactor/subject.txt"
 
-    threads = Array.new
-    (d/"a").each do |e|
-      threads.push e.inner_text.toutf8
-    end
-    
     filterd_lists = Array.new
     
     self.each do |name|
-      threads.each do |title|
-        if title.include?(name)
-          filterd_lists.push name
-          next
+        open(url,"r:cp932").toutf8.each_line do |title|
+            if title.toutf8.include?(name)
+                filterd_lists.push name
+                next
+            end
         end
-      end
     end
     filterd_lists
   end
