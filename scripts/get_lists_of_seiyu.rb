@@ -55,7 +55,7 @@ class Array
         end
       end
     end
-    self
+    filterd_lists
   end
   
 end
