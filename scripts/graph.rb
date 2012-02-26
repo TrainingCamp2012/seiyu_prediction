@@ -13,7 +13,7 @@ class Graph
       f.each do |l|
         # file format
         # from \t to \t weight
-        v_1, v_2, w = l.chomp.split("\t")
+        v_1, v_2, w = l.chomp.split(",")
         @vertexes.push v_1
         @vertexes.push v_2
         @neighbors[v_1].push v_2

@@ -4,13 +4,13 @@
 require "./graph.rb"
 
 class Graph
+  attr_reader :neighbors
   def prediction(v_s, length)
     found = [ ]; found.push v_s
     new_search = [ ]; new_search.push v_s
     large_s = Hash.new{0.0}; large_s[v_s] = 1
     
     0.upto(length) do |current_degree|
-      p large_s
       old_search = Marshal.load(Marshal.dump(new_search))
       new_search.clear
       while !old_search.empty?
@@ -48,7 +48,13 @@ end
 
 
 if __FILE__ == $0
-  g = Graph.new(true)
-  g.read_file(ARGV[0])
-  p g.prediction(ARGV[1], ARGV[2].to_i)
+  file = ARGV[0]
+  start_node = ARGV[1]
+  depth  =ARGV[2].to_i
+  
+  g = Graph.new(false)
+  g.read_file(file)
+  scores = g.prediction(start_node, depth)
+  # 既存のノードはフィルタリング
+  p scores.select{|node, v| !g.neighbors[start_node].include?(node)}.to_a.sort{|a, b|b[1] <=> a[1]}
 end
