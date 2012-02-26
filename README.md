@@ -1,4 +1,4 @@
-# Whatt's?  
+# What's?  
 Wikipediaを用いた声優リストの一覧取得や共演関係予測を行う．
 # Usage   
 `ruby link_prediction.rb ../data/seiyu_women_co_graph_node_pair.txt 声優名 深さ`
