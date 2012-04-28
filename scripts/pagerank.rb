@@ -16,18 +16,19 @@ class Graph
 
     iteration.times do
       tmp_score = Hash.new{0.0}
-      @vertexes.each do |v_from|
-        @neighbors[v_from].each do |v_to|
+
+      @neighbors.each_pair do |v_from, adjs|
+        adjs.each do |v_to|
           tmp_score[v_to] += transit_prob[v_from => v_to] * @pagerank_score[v_from]
         end
       end
-      
+
       #Update pagerank_score(sum)
       @vertexes.each do |v|
-        @pagerank_score[v] = (1 - damping) + damping * tmp_score[v];
+        @pagerank_score[v] = (1 - damping) + damping * tmp_score[v]
       end
     end
-    
+
     @pagerank_score
   end
 end
