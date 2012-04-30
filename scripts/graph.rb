@@ -17,17 +17,18 @@ class Graph
         edge(v_1, v_2, w.to_f)
       end
     }
-    @vertexes.uniq!
   end
 
-  def edge(v_from, v_to, w)
-    @vertexes.push v_from
-    @vertexes.push v_to
-    @neighbors[v_from].push v_to
+  def edge(v_f, v_t, w)
+    v_from = v_f.to_sym
+    v_to = v_t.to_sym
+    @vertexes.push v_from if !@vertexes.include?(v_from)
+    @vertexes.push v_to if !@vertexes.include?(v_to)
+    @neighbors[v_from].push v_to if !@neighbors[v_from].include?(v_to)
     @weights[v_from => v_to] += w
 
     unless @directed
-      @neighbors[v_to].push v_from
+      @neighbors[v_to].push v_from if !@neighbors[v_to].include?(v_from)
       @weights[v_to => v_from] += w
     end
   end
