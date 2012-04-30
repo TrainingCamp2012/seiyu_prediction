@@ -16,6 +16,9 @@ class TimePageRank
     open(File.expand_path(file), 'r'){ |f|
       f.each do |l|
         ary = l.chomp.split("\t")
+        # 1998--- などに対応するためスキップ
+        next if ary[1].include?("---")
+
         year = ary[1].split("-").join("").to_i
         next if year < @lim
         @data[year].push ary[2..-1]
@@ -43,7 +46,7 @@ class TimePageRank
     years = @data.keys.sort
     years.each_with_index do |year, i|
       puts "Now #{year} (#{i + 1}/#{years.size})"
-      construct_graph(year).pagerank.each_pair do |seiyu, value|
+      construct_graph(year).pagerank(0.85, 50).each_pair do |seiyu, value|
         @scores[seiyu].push [year, value]
       end
     end
